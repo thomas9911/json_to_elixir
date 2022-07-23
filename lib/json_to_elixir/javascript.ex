@@ -44,12 +44,23 @@ defmodule JsonToElixir.Javascript do
         opts
       ) do
     mapped_arguments = Enum.map(args, &ast_to_code(&1, opts))
+    amount_of_args = Enum.count(args)
 
-    case {ast_to_function(function, opts), Enum.count(args)} do
+    case {ast_to_function(function, amount_of_args, opts), amount_of_args} do
       {{function, :infix}, 2} ->
         "#{Enum.at(mapped_arguments, 0)} #{function} #{Enum.at(mapped_arguments, 1)}"
+
       {{function, :prefix}, _} ->
         "#{function}(#{Enum.join(mapped_arguments, ", ")})"
+
+      {{[_ | _] = function, :postfix}, 2} ->
+        [first_arg, second_arg] = mapped_arguments
+        "#{first_arg}.#{Enum.join(function, second_arg)}"
+
+      {{function, :postfix}, amount} when amount > 0 ->
+        {[first_arg], rest} = Enum.split(mapped_arguments, 1)
+        "#{first_arg}.#{function}(#{Enum.join(rest, ",")})"
+
       _ ->
         raise UndefinedFunctionError, "Invalid function"
     end
@@ -74,16 +85,20 @@ defmodule JsonToElixir.Javascript do
     const
   end
 
-  defp ast_to_function("add", _) do
+  defp ast_to_function("add", _, _) do
     {"+", :infix}
   end
 
-  # defp ast_to_function("concat", _) do
-  #   {"+", :infix}
-  # end
-
-  defp ast_to_function("concat", _) do
+  defp ast_to_function("concat", _, _) do
     {"''.concat", :prefix}
+  end
+
+  defp ast_to_function("trim", 1, _) do
+    {"trim", :postfix}
+  end
+
+  defp ast_to_function("trim", 2, _) do
+    {["replace(RegExp(`^${", "}+`), '').replace(RegExp(`${", "}+$`), '')"], :postfix}
   end
 
   def from_json(name, txt) do

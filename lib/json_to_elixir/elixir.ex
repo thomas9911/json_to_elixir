@@ -39,10 +39,17 @@ defmodule JsonToElixir.Elixir do
         opts
       ) do
     mapped_arguments = Enum.map(args, &ast_to_quoted(&1, opts))
+    args_amount = Enum.count(args)
 
-    case {ast_to_function(function, opts), Enum.count(args)} do
+    case {ast_to_function(function, args_amount, opts), args_amount} do
       {{function, :infix}, 2} ->
         {function, [], mapped_arguments}
+
+      {{function, :prefix}, _} ->
+        {function, [], mapped_arguments}
+
+      {{function, :wrapped_prefix}, _} ->
+        {function, [], [mapped_arguments]}
 
       _ ->
         raise UndefinedFunctionError, "Invalid function"
@@ -66,12 +73,26 @@ defmodule JsonToElixir.Elixir do
     end
   end
 
-  defp ast_to_function("add", _) do
+  defp ast_to_function("add", 2, _) do
     {:+, :infix}
   end
 
-  defp ast_to_function("concat", _) do
+  defp ast_to_function("concat", 2, _) do
     {:<>, :infix}
+  end
+
+  defp ast_to_function("concat", _, _) do
+    {quote do
+       Enum.join()
+     end
+     |> elem(0), :wrapped_prefix}
+  end
+
+  defp ast_to_function("trim", i, _) when i in [1, 2] do
+    {quote do
+       String.trim()
+     end
+     |> elem(0), :prefix}
   end
 
   def from_json(name, txt) do

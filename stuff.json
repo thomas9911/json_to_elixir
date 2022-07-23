@@ -39,10 +39,41 @@
       ],
       "body": [
         {
+          "out": "abc",
+          "code": {
+            "function": "concat",
+            "args": [{ "variable": "text" }, { "const": "?" }]
+          }
+        },
+        {
           "out": null,
           "code": {
             "function": "concat",
-            "args": [{ "variable": "text" }, { "const": "!" }]
+            "args": [{ "variable": "abc" }, { "const": "?" }, { "const": "?" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "trim_test",
+      "arguments": [
+        {
+          "name": "text",
+          "type": "string"
+        }
+      ],
+      "body": [
+        {
+          "out": "x",
+          "code": {
+            "function": "trim",
+            "args": [{ "variable": "text" }]
+          }
+        },
+        {
+          "code": {
+            "function": "trim",
+            "args": [{ "variable": "x" }, { "const": "abc" }]
           }
         }
       ]

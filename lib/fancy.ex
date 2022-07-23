@@ -5,6 +5,12 @@ defmodule Fancy do
   end
 
   def concat_questionmark(text) do
-    text <> "!"
+    abc = text <> "?"
+    Enum.join([abc, "?", "?"])
+  end
+
+  def trim_test(text) do
+    x = String.trim(text)
+    String.trim(x, "abc")
   end
 end
