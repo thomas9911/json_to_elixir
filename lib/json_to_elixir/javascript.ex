@@ -48,7 +48,8 @@ defmodule JsonToElixir.Javascript do
     case {ast_to_function(function, opts), Enum.count(args)} do
       {{function, :infix}, 2} ->
         "#{Enum.at(mapped_arguments, 0)} #{function} #{Enum.at(mapped_arguments, 1)}"
-
+      {{function, :prefix}, _} ->
+        "#{function}(#{Enum.join(mapped_arguments, ", ")})"
       _ ->
         raise UndefinedFunctionError, "Invalid function"
     end
@@ -77,8 +78,12 @@ defmodule JsonToElixir.Javascript do
     {"+", :infix}
   end
 
+  # defp ast_to_function("concat", _) do
+  #   {"+", :infix}
+  # end
+
   defp ast_to_function("concat", _) do
-    {"+", :infix}
+    {"''.concat", :prefix}
   end
 
   def from_json(name, txt) do
