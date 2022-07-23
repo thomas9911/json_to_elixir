@@ -3,7 +3,6 @@ defmodule JsonToElixir.Ast.Line do
   use JsonToElixir.Ast, not_required: [:out]
   alias JsonToElixir.Ast.Code
 
-
   @primary_key false
   embedded_schema do
     field(:out, :string)

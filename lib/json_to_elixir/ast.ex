@@ -2,7 +2,7 @@ defmodule JsonToElixir.Ast do
   defstruct [:root, :name]
 
   defmacro __using__(opts) do
-    quote  do
+    quote do
       def load(changeset \\ __MODULE__.__struct__(), params) do
         not_required = unquote(opts)[:not_required] || []
 

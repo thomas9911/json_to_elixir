@@ -7,7 +7,7 @@ defmodule JsonToElixir.Ast.Function do
 
   @primary_key false
   embedded_schema do
-    field :name, :string
+    field(:name, :string)
     embeds_many(:arguments, InputArgument)
     embeds_many(:body, Line)
   end

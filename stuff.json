@@ -28,6 +28,24 @@
           }
         }
       ]
+    },
+    {
+      "name": "concat_questionmark",
+      "arguments": [
+        {
+          "name": "text",
+          "type": "string"
+        }
+      ],
+      "body": [
+        {
+          "out": null,
+          "code": {
+            "function": "concat",
+            "args": [{ "variable": "text" }, { "const": "!" }]
+          }
+        }
+      ]
     }
   ]
 }
