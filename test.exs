@@ -19,3 +19,11 @@ File.write("lib/fancy.ex", elixir)
 # IO.puts(javascript)
 
 File.write("fancy.js", javascript)
+
+
+{:ok, en} = JsonToElixir.English.from_json(Fancy, data)
+
+# IO.inspect(javascript)
+# IO.puts(javascript)
+
+File.write("fancy.txt", en)

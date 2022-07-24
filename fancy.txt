@@ -1,0 +1,13 @@
+function my_add with inputs x and y:
+  set z equal to x add y
+  return 1 add z
+
+
+function concat_questionmark with inputs text:
+  set abc equal to text combine '?'
+  return abc combine '?' and '?'
+
+
+function trim_test with inputs text:
+  set x equal to trim away from text
+  return x trim with 'abc'
