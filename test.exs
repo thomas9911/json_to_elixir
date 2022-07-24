@@ -1,4 +1,4 @@
-data =  File.read!("stuff.json")
+data =  File.read!("priv/test/fancy.json")
 
 # {:ok, ast} = JsonToElixir.Ast.from_json(Fancy, data) |> IO.inspect()
 

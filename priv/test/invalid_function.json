@@ -1,0 +1,26 @@
+{
+  "functions": [
+    {
+      "name": "my_add",
+      "arguments": [
+        {
+          "name": "x",
+          "type": "any"
+        },
+        {
+          "name": "y",
+          "type": "any"
+        }
+      ],
+      "body": [
+        {
+          "out": null,
+          "code": {
+            "function": "invalid_function",
+            "args": [{ "variable": "x" }, { "variable": "y" }]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -78,7 +78,7 @@ defmodule JsonToElixir.Javascript do
   end
 
   def ast_to_code(%JsonToElixir.Ast.Argument.Const{const: const}, _) when is_binary(const) do
-    ~s|"#{const}"|
+    ~s|'#{const}'|
   end
 
   def ast_to_code(%JsonToElixir.Ast.Argument.Const{const: const}, _) do
@@ -101,10 +101,17 @@ defmodule JsonToElixir.Javascript do
     {["replace(RegExp(`^${", "}+`), '').replace(RegExp(`${", "}+$`), '')"], :postfix}
   end
 
+  defp ast_to_function(_, _, _) do
+    nil
+  end
+
   def from_json(name, txt) do
     case JsonToElixir.Ast.from_json(name, txt) do
       {:ok, ast} -> {:ok, ast_to_code(ast, [])}
       e -> e
     end
+  rescue
+    UndefinedFunctionError ->
+      {:error, :invalid_function}
   end
 end

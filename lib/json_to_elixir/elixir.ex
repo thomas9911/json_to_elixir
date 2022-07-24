@@ -95,10 +95,17 @@ defmodule JsonToElixir.Elixir do
      |> elem(0), :prefix}
   end
 
+  defp ast_to_function(_, _, _) do
+    nil
+  end
+
   def from_json(name, txt) do
     case JsonToElixir.Ast.from_json(name, txt) do
       {:ok, ast} -> {:ok, ast_to_quoted(ast, [])}
       e -> e
     end
+  rescue
+    UndefinedFunctionError ->
+      {:error, :invalid_function}
   end
 end
