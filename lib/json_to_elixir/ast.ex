@@ -90,6 +90,8 @@ defmodule JsonToElixir.Ast do
           |> __json_to_elixir_ast_changeset_apply_embeds(embeds)
           |> __json_to_elixir_ast_changeset_apply_polymorphic(polymorphic_fields)
       end
+
+      defoverridable load: 1, load: 2
     end
   end
 
