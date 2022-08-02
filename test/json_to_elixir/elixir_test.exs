@@ -1,5 +1,5 @@
 defmodule JsonToElixir.ElixirTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "add" do
     data = %{

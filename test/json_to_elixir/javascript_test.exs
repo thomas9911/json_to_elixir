@@ -1,5 +1,5 @@
 defmodule JsonToElixir.JavascriptTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   defp ignore_formatting(js) do
     js |> String.split() |> Enum.join(" ")

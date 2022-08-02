@@ -1,5 +1,6 @@
 defmodule JsonToElixirTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
+
   doctest JsonToElixir
 
   @invalid_function_json File.read!("priv/test/invalid_function.json")
