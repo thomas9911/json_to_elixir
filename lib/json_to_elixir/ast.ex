@@ -1,4 +1,8 @@
 defmodule JsonToElixir.Ast do
+  @moduledoc """
+  Storage of the code as an elixir term
+  """
+
   defstruct [:root, :name]
 
   defmacro __using__(opts) do
